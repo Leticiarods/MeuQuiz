@@ -9,6 +9,8 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyparser.json());
 
+
+
 var conString = config.urlConnection;
 var client = new Client(conString);
 client.connect(function (err) {
@@ -25,7 +27,7 @@ client.connect(function (err) {
 
 app.get("/", (req, res) => {
     console.log("Response ok.");
-    res.send("Ok – Servidores disponível.");
+    res.send("Ok – Servidor disponível.");
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

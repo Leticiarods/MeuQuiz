@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function App() {
+function App() {
   return (
     <>
     <p>paragrafo</p>
@@ -8,3 +8,4 @@ export default function App() {
     </>
   )
 }
+export default App;
