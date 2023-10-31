@@ -25,7 +25,7 @@ client.connect(function (err) {
 
 app.get("/", (req, res) => {
     console.log("Response ok.");
-    res.send("Ok – Servidor disponível.");
+    res.send("Ok – Servidores disponível.");
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
