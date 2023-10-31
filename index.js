@@ -28,13 +28,6 @@ app.get("/", (req, res) => {
     res.send("Ok – Servidor disponível.");
 });
 
-app.get("/", (req, res) => {
-    console.log("Response ok.");
-    res.send("Ok – Servidor disponível.");
-});
-app.listen(config.port, () =>
-    console.log("Servidor funcionando na porta " + config.port)
-);
 
 app.get("/usuarios", (req, res) => {
     try {
@@ -139,6 +132,130 @@ app.put("/usuarios/:id", (req, res) => {
         console.error(erro);
     }
 });
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+app.get("/perguntas", (req, res) => {
+    try {
+        client.query("SELECT * FROM perguntas", function
+            (err, result) {
+            if (err) {
+                return console.error("Erro ao executar a qry de SELECT", err);
+            }
+            res.send(result.rows);
+            console.log("Chamou get perguntas");
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+app.get("/perguntas/:id", (req, res) => {
+    try {
+        console.log("Chamou /:id " + req.params.id);
+        client.query(
+            "SELECT * FROM perguntas WHERE id = $1",
+            [req.params.id],
+            function (err, result) {
+                if (err) {
+                    return console.error("Erro ao executar a qry de SELECT id", err);
+                }
+                res.send(result.rows);
+                //console.log(result);
+            }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+app.delete("/perguntas/:id", (req, res) => {
+    try {
+        console.log("Chamou delete /:id " + req.params.id);
+        const id = req.params.id;
+        client.query(
+            "DELETE FROM perguntas WHERE id = $1",
+            [id],
+            function (err, result) {
+                if (err) {
+                    return console.error("Erro ao executar a qry de DELETE", err);
+                } else {
+                    if (result.rowCount == 0) {
+                        res.status(400).json({ info: "Registro não encontrado." });
+                    } else {
+                        res.status(200).json({ info: `Registro excluído. Código: ${id}` });
+                    }
+                }
+                console.log(result);
+            }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.get("/respostas", (req, res) => {
+    try {
+        client.query("SELECT * FROM respostas", function
+            (err, result) {
+            if (err) {
+                return console.error("Erro ao executar a qry de SELECT", err);
+            }
+            res.send(result.rows);
+            console.log("Chamou get respostas");
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+app.get("/respostas/:id", (req, res) => {
+    try {
+        console.log("Chamou /:id " + req.params.id);
+        client.query(
+            "SELECT * FROM respostas WHERE id = $1",
+            [req.params.id],
+            function (err, result) {
+                if (err) {
+                    return console.error("Erro ao executar a qry de SELECT id", err);
+                }
+                res.send(result.rows);
+                //console.log(result);
+            }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+app.delete("/respostas/:id", (req, res) => {
+    try {
+        console.log("Chamou delete /:id " + req.params.id);
+        const id = req.params.id;
+        client.query(
+            "DELETE FROM respostas WHERE id = $1",
+            [id],
+            function (err, result) {
+                if (err) {
+                    return console.error("Erro ao executar a qry de DELETE", err);
+                } else {
+                    if (result.rowCount == 0) {
+                        res.status(400).json({ info: "Registro não encontrado." });
+                    } else {
+                        res.status(200).json({ info: `Registro excluído. Código: ${id}` });
+                    }
+                }
+                console.log(result);
+            }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.listen(config.port, () =>
     console.log("Servidor funcionando na porta " + config.port)
