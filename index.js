@@ -94,10 +94,10 @@ app.delete("/usuarios/:id", (req, res) => {
 app.post("/usuarios", (req, res) => {
     try {
         console.log("Chamou post", req.body);
-        const { nome, email } = req.body;
+        const { nome } = req.body;
         client.query(
-            "INSERT INTO Usuarios (nome, email) VALUES ($1, $2) RETURNING * ",
-            [nome, email],
+            "INSERT INTO Usuarios (nome) VALUES ($1) RETURNING * ",
+            [nome],
             function (err, result) {
                 if (err) {
                     return console.error("Erro ao executar a qry de INSERT", err);
@@ -117,10 +117,10 @@ app.put("/usuarios/:id", (req, res) => {
     try {
         console.log("Chamou update", req.body);
         const id = req.params.id;
-        const { nome, email } = req.body;
+        const { nome } = req.body;
         client.query(
-            "UPDATE Usuarios SET nome=$1, email=$2 WHERE id =$3 ",
-            [nome, email, id],
+            "UPDATE Usuarios SET nome=$1 WHERE id =$2 ",
+            [nome, id],
             function (err, result) {
                 if (err) {
                     return console.error("Erro ao executar a qry de UPDATE", err);
