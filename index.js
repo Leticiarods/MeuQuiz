@@ -257,6 +257,22 @@ app.delete("/respostas/:id", (req, res) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get("/feedback_table", (req, res) => {
+    try {
+        client.query("SELECT * FROM feedback_table", function
+            (err, result) {
+            if (err) {
+                return console.error("Erro ao executar a qry de SELECT", err);
+            }
+            res.send(result.rows);
+            console.log("Chamou get feedback_table");
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.listen(config.port, () =>
     console.log("Servidor funcionando na porta " + config.port)
